@@ -33,13 +33,35 @@ const headermovie = ref([]);
         <div class="header__inner">
             <div class="header__banner"></div>
 
-            <div class="header__movie" v-for="movie in top5Movies" :key="movie.id">
-                <div class="movie__thumb">
-                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
-                </div>
 
+            <div class="header__movie">
+                <div class="movie__thumb">
+
+                </div>
                 <div class="movie__info">
-                    <h3>{{ movie.title }}</h3>
+                    <div class="movie__title">영화타이틀</div>
+                    <div class="movie__desc">영화 내용</div>
+                    <div class="movie__actor">
+                        <h3>영화배우</h3>
+                        <ul>
+                            <li><img src="" alt="감독">
+                                <div class="name">감독</div>
+                            </li>
+                            <li><img src="" alt="주연배우">
+                                <div class="name">배우</div>
+                            </li>
+                            <li><img src="" alt="주연배우">
+                                <div class="name">배우</div>
+                            </li>
+                            <li><img src="" alt="주연배우">
+                                <div class="name">배우</div>
+                            </li>
+                            <li><img src="" alt="주연배우">
+                                <div class="name">배우</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="movie__launching">개봉일</div>
                 </div>
             </div>
         </div>
@@ -49,11 +71,11 @@ const headermovie = ref([]);
 <style lang="scss">
 .logo {
     width: 100%;
-    height: 20px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    padding-top: 20px;
 }
 
 .header__banner {
@@ -63,13 +85,17 @@ const headermovie = ref([]);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    margin-top: 20px;
 }
 
+
+
 .header__movie {
-    border: 1px solid pink;
     width: 100%;
-    height: 630px;
     display: flex;
+    padding: 30px;
+    background-color: #000;
+    margin-top: 20px;
 
 
     .movie__thumb {
@@ -80,6 +106,52 @@ const headermovie = ref([]);
     .movie__info {
         border: 1px solid orange;
         width: 60%;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+        div {
+            margin-top: 10px;
+        }
+
+        .movie__title {
+            width: 100%;
+            text-align: center;
+            font-weight: 800;
+            font-size: 40px;
+        }
+
+        .movie__desc {
+            width: 100%;
+        }
+
+        .movie__actor {
+            width: 100%;
+
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+                ;
+                justify-content: center;
+                text-align: center;
+
+                li {
+                    border: 1px solid #fff;
+
+                    img {
+                        display: flex;
+                        width: 150px;
+                        height: 150px;
+                    }
+                }
+            }
+        }
+
+        .movie__launching {
+            width: 100%;
+        }
     }
 }
 </style>
