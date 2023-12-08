@@ -33,6 +33,12 @@ echo "# movie-project" >> README.md
   git remote add origin https://github.com/SeoEugene/movie-project.git
   git push -u origin main
 
+
+
+  `git add .`
+  `git commit -m "커밋 메시지"`
+  `git push origin main`
+
 ### install
 `create vue@latest`
 √ Project name: ... .
@@ -66,3 +72,7 @@ echo "# movie-project" >> README.md
 ```sh
 npm run lint
 ```
+
+`git add . 명령어 오류`
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+해결방법: `git pull origin master --allow-unrelated-histories`

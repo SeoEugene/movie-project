@@ -8,19 +8,14 @@
             </div>
         </header>
 
-        <!-- <div class="movie__box">
-
-
-            
-            //movie__info
-        </div>
-    </div> -->
-
-
-        <DetailIntro v-if="movieBasic" :movieBasic="movieBasic" />
-        <DetailInfo v-if="movieInfo" :movieInfo="movieInfo" />
-        <!--<DetailReview v-if="movieReview" :movieReview="movieReview" />
+        <div class="movie__box">
+            <!-- 영화 썸네일 -->
+            <DetailIntro v-if="movieBasic" :movieBasic="movieBasic" />
+            <!-- 영화 정보 -->
+            <DetailInfo v-if="movieInfo" :movieInfo="movieInfo" />
+            <!--<DetailReview v-if="movieReview" :movieReview="movieReview" />
     <DetailCredits v-if="movieCredits" :movieCredits="movieCredits" /> -->
+        </div>
     </div>
 </template>
 
