@@ -34,12 +34,12 @@ const headermovie = ref([]);
             <div class="header__banner"></div>
 
 
-            <div class="header__movie">
+            <div class="header__movie" v-for="latest in slidemovie.data.results">
                 <div class="movie__thumb">
 
                 </div>
                 <div class="movie__info">
-                    <div class="movie__title">영화타이틀</div>
+                    <div class="movie__title">{{ latest.title }}</div>
                     <div class="movie__desc">영화 내용</div>
                     <div class="movie__actor">
                         <h3>영화배우</h3>
@@ -67,6 +67,41 @@ const headermovie = ref([]);
         </div>
     </header>
 </template>
+
+<script>
+export default {
+    methods: {
+        getPostPath(posterPath) {
+            return `https://image.tmdb.org/t/p/w500${posterPath}`
+        }
+    },
+
+    setup() {
+        const slidemovie = ref(null)
+        const route = useRoute()
+
+        onMounted(async () => {
+            // get방식
+            const movieId = route.params.movieId
+            // api키 값 가져오기 (.env)
+            const apiKey = import.meta.env.VITE_API_KEY
+            // 언어 설정
+            const language = 'ko-KR'
+
+            try {
+                const resslidemovie = await axios.get(
+                    `https://api.themoviedb.org/3/movie/now_playing?language=${language}&page=1'`
+                )
+                console.log(resslidemovie.data)
+                slidemovie.value = resslidemovie.data
+            } catch (err) {
+                console.log(err)
+            }
+        })
+        return { slidemovie }
+    }
+}     
+</script>
 
 <style lang="scss">
 .logo {
