@@ -76,3 +76,7 @@ npm run lint
 `git add . 명령어 오류`
 warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
 해결방법: `git pull origin master --allow-unrelated-histories`
+
+
+
+`npm install -g create-vite`

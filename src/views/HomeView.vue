@@ -1,76 +1,74 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import axios from 'axios';
-import HeaderSection from '@/components/section/HeaderSection.vue';
-import FooterSection from '@/components/section/FooterSection.vue';
-import MovieSearch from '@/components/contents/MovieSearch.vue';
-import MovieTag from '@/components/contents/MovieTag.vue';
-import MovieCont from '@/components/contents/MovieCont.vue';
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+import HeaderSection from '@/components/section/HeaderSection.vue'
+import FooterSection from '@/components/section/FooterSection.vue'
+import MovieSearch from '@/components/contents/MovieSearch.vue'
+import MovieTag from '@/components/contents/MovieTag.vue'
+import MovieCont from '@/components/contents/MovieCont.vue'
 
+const movies = ref([]) //useState
 
-const movies = ref([]);   //useState
-const searchTerm = ref([]);
-const fetchMovies = async (category) => {
-  let url = 'https://api.themoviedb.org/3/movie/popular';
+// const fetchMovies = async (category) => {
+//   let url = 'https://api.themoviedb.org/3/movie/popular'
 
-  switch (category) {
-    case 'latest':
-      url = 'https://api.themoviedb.org/3/movie/now_playing';
-      break;
+//   switch (category) {
+//     case 'latest':
+//       url = 'https://api.themoviedb.org/3/movie/now_playing'
+//       break
 
-    case 'popular':
-      url = 'https://api.themoviedb.org/3/movie/popular';
-      break;
+//     case 'popular':
+//       url = 'https://api.themoviedb.org/3/movie/popular'
+//       break
 
-    case 'top_rated':
-      url = 'https://api.themoviedb.org/3/movie/top_rated';
-      break;
+//     case 'top_rated':
+//       url = 'https://api.themoviedb.org/3/movie/top_rated'
+//       break
 
-    case 'upcoming':
-      url = 'https://api.themoviedb.org/3/movie/upcoming';
-      break;
+//     case 'upcoming':
+//       url = 'https://api.themoviedb.org/3/movie/upcoming'
+//       break
+//   }
 
-  }
+//   try {
+//     const response = await axios.get(url, {
+//       params: {
+//         api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
+//         language: 'ko-KR',
+//         page: '1'
+//       }
+//     })
+//     console.log(response)
+//     movies.value = response.data.results
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
+// fetchMovies
 
-
-  try {
-    const response = await axios.get(url, {
-      params: {
-        api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
-        language: 'ko-KR',
-        page: '1'
-      }
-
-    });
-    console.log(response)
-    movies.value = response.data.results;
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-const search = async () => {
-  try {
-    console.log(searchTerm.value);
-    const response = await axios.get('https://api.themoviedb.org/3/search/movie', {
-      params: {
-        api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
-        language: 'ko-KR',
-        query: searchTerm.value
-      }
-    });
-    console.log(response);
-    movies.value = response.data.results;
-    // searchResults.value = response.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
+// const search = async () => {
+//   try {
+//     console.log(searchTerm.value)
+//     const response = await axios.get('https://api.themoviedb.org/3/search/movie', {
+//       params: {
+//         api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
+//         language: 'ko-KR',
+//         query: searchTerm.value
+//       }
+//     })
+//     console.log(response)
+//     movies.value = response.data.results
+//     // searchResults.value = response.data;
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+// search
 
 onMounted(async () => {
   // 초기 페이지 로딩 시 최신 영화를 가져옴
-  await fetchMovies('latest');
-});
+  await fetchMovies('latest')
+})
 </script>
 
 <template>
@@ -78,34 +76,9 @@ onMounted(async () => {
   <main id="main" role="main">
     <div class="container">
       <div class="movie__inner">
-
-        <section class="movie__search">
-          <h2 class="blind">검색하기</h2>
-          <input type="search" v-model="searchKeyword" placeholder="검색어를 입력해주세요!" @keyup.enter="serachMovies">
-          <button type="submit" @click="serachMovies">검색</button>
-        </section>
-        <!-- //movie__search -->
-
-        <div class="movie__tag">
-          <ul>
-            <li><a href="#" @click="fetchMovies('latest')">최신 영화</a></li>
-            <li><a href="#" @click="fetchMovies('popular')">인기 영화</a></li>
-            <li><a href="#" @click="fetchMovies('upcoming')">개봉 예정</a></li>
-            <li><a href="#" @click="fetchMovies('toprated')">최고 평점</a></li>
-          </ul>
-        </div>
-        <!-- //movie__tag -->
-
-        <section class="movie__cont">
-          <h2 class="blind">영화</h2>
-          <div class="movie play__icon" v-for="movie in movies" :key="movie.id">
-            <a :href="'/detail/' + movie.id">
-              <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
-            </a>
-          </div>
-        </section>
-        <!-- //movie__cont -->
-
+        <MovieSearch />
+        <MovieTag />
+        <MovieCont />
       </div>
     </div>
   </main>
@@ -116,7 +89,7 @@ onMounted(async () => {
 
 <script>
 export default {
-  name: "MovieHomePage",
+  name: 'MovieHomePage',
   components: {
     HeaderSection,
     FooterSection,
@@ -126,38 +99,42 @@ export default {
   },
   data() {
     return {
-      movies: [],
+      movies: []
     }
   },
   methods: {
     async search(query) {
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`)
-        const result = await response.json();
-        console.log(result);
+        const response = await fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`
+        )
+        const result = await response.json()
+        console.log(result)
       } catch (err) {
         console.log(err)
       }
     },
     async tags(query) {
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`)
-        const result = await response.json();
-        console.log(result);
+        const response = await fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`
+        )
+        const result = await response.json()
+        console.log(result)
       } catch (err) {
         console.log(err)
       }
-
     },
     async content(query) {
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`)
-        const result = await response.json();
-        console.log(result);
+        const response = await fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`
+        )
+        const result = await response.json()
+        console.log(result)
       } catch (err) {
         console.log(err)
       }
-
     }
   }
 }
@@ -168,7 +145,6 @@ export default {
   display: block;
   justify-content: space-between;
 
-
   .movie__search {
     margin-top: 50px;
     display: flex;
@@ -178,7 +154,7 @@ export default {
       width: 60%;
       height: 40px;
       border: none;
-      border-bottom: 2px solid #FFB2B2;
+      border-bottom: 2px solid #ff9a9e;
       background-color: #2b2b2b;
       outline: none;
       font-size: 18px;
@@ -190,7 +166,7 @@ export default {
       height: 40px;
       border: none;
       border-radius: 30px;
-      background-color: #FFB2B2;
+      background: linear-gradient(to right, #ff9a9e, #fecfef);
       color: #2b2b2b;
       font-weight: 800;
       margin-left: 10px;
@@ -209,11 +185,11 @@ export default {
     a {
       margin: 5px;
       padding: 10px 20px;
-      border: 2px solid #FFB2B2;
+      border: 2px solid #ff9a9e;
       border-radius: 30px;
 
       &:hover {
-        background-color: #FFB2B2;
+        background-color: #fecfef;
         font-weight: 600;
       }
     }
@@ -230,12 +206,11 @@ export default {
       background-color: #ccc;
     }
   }
-
 }
 
 @media (max-width: 1000px) {
   .movie__inner {
-    border: 1px solid #FFB2B2;
+    border: 1px solid #ffb2b2;
   }
 }
 </style>

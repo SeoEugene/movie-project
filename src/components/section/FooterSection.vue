@@ -1,7 +1,9 @@
 <template>
-    <footer id="footer" role="contentinfo">
-        footer
-    </footer>
+  <footer id="footer" role="contentinfo">
+    <a href="https://www.flaticon.com/kr/free-icons/-" title="이미지 없음 아이콘"
+      >이미지 없음 아이콘 제작자: sonnycandra - Flaticon</a
+    >
+  </footer>
 </template>
 
 <style lang="scss"></style>
