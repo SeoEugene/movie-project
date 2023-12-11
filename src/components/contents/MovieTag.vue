@@ -5,10 +5,6 @@
       <li><a href="#" @click="fetchMovies('popular')">인기영화</a></li>
       <li><a href="#" @click="fetchMovies('top_rated')">영화 순위</a></li>
       <li><a href="#" @click="fetchMovies('upcoming')">개봉예정</a></li>
-
-      <!-- <li><a href="#">공포영화</a></li>
-            <li><a href="#">액션영화</a></li>
-            <li><a href="#">슬픈영화</a></li> -->
     </ul>
   </div>
   <!-- movie__tab -->
@@ -50,22 +46,11 @@ const fetchMovies = async (category) => {
       url = 'https://api.themoviedb.org/3/movie/upcoming'
       break
   }
-
-  try {
-    const response = await axios.get(url, {
-      params: {
-        api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
-        language: 'ko-KR',
-        page: '1'
-      }
-    })
-    console.log(response)
-    movies.value = response.data.results
-  } catch (err) {
-    console.log(err)
-  }
 }
-// fetchMovies
 
-// export default {}
+
+
+export default {
+
+}
 </script>

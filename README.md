@@ -39,6 +39,9 @@ echo "# movie-project" >> README.md
   `git commit -m "커밋 메시지"`
   `git push origin main`
 
+
+  `git pull origin 브랜치명`
+
 ### install
 `create vue@latest`
 √ Project name: ... .
@@ -76,7 +79,3 @@ npm run lint
 `git add . 명령어 오류`
 warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
 해결방법: `git pull origin master --allow-unrelated-histories`
-
-
-
-`npm install -g create-vite`

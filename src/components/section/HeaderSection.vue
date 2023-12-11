@@ -1,32 +1,3 @@
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-
-// headermovie에 개봉영화 리스트를 가져옴
-const headermovie = ref([]);
-
-// 개봉 예정 영화 가져오기
-// try {
-//     const response = await axios.get('https://api.themoviedb.org/3/movie/upcoming', {
-//         params: {
-//             api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
-//             language: 'ko-KR',
-//             page: '1'
-//         }
-//     });
-//     // 데이터 구조 : data.results (모든 데이터정보)
-//     headermovie.value = response.data.results;
-
-//     // 데이터 5개만 가져오기
-//     headermovie.value = response.data.results.slice(0, 5);
-//     console.log(headermovie.value);
-
-// } catch (err) {
-//     console.log(err);
-// }
-
-</script>
-
 <template>
     <header id="header" role="banner">
         <h2 class="logo">CINE</h2>
@@ -34,12 +5,12 @@ const headermovie = ref([]);
             <div class="header__banner"></div>
 
 
-            <div class="header__movie" v-for="latest in slidemovie.data.results">
+            <div class="header__movie" v-for="(movie, index) in slidemovie" :key="index">
                 <div class="movie__thumb">
-
+                    <img :src="getPostPath(movie.poster_path)" :alt="movie.title" />
                 </div>
                 <div class="movie__info">
-                    <div class="movie__title">{{ latest.title }}</div>
+                    <div class="movie__title">{{ movie.title }}</div>
                     <div class="movie__desc">영화 내용</div>
                     <div class="movie__actor">
                         <h3>영화배우</h3>
@@ -61,7 +32,7 @@ const headermovie = ref([]);
                             </li>
                         </ul>
                     </div>
-                    <div class="movie__launching">개봉일</div>
+                    <div class="movie__launching">{{ movie.release_date }}</div>
                 </div>
             </div>
         </div>
@@ -69,38 +40,49 @@ const headermovie = ref([]);
 </template>
 
 <script>
-export default {
-    methods: {
-        getPostPath(posterPath) {
-            return `https://image.tmdb.org/t/p/w500${posterPath}`
-        }
-    },
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
+export default {
     setup() {
-        const slidemovie = ref(null)
-        const route = useRoute()
+        const slidemovie = ref(null);
+
+        const getPostPath = (posterPath) => {
+            return `https://image.tmdb.org/t/p/w500${posterPath}`;
+        };
 
         onMounted(async () => {
-            // get방식
-            const movieId = route.params.movieId
-            // api키 값 가져오기 (.env)
-            const apiKey = import.meta.env.VITE_API_KEY
-            // 언어 설정
-            const language = 'ko-KR'
+            const apiKey = import.meta.env.VITE_API_KEY;
+            const language = 'ko-KR';
 
             try {
                 const resslidemovie = await axios.get(
-                    `https://api.themoviedb.org/3/movie/now_playing?language=${language}&page=1'`
-                )
-                console.log(resslidemovie.data)
-                slidemovie.value = resslidemovie.data
+                    `https://api.themoviedb.org/3/movie/now_playing?language=${language}&page=1`, {
+                    params: {
+                        api_key: apiKey,
+                        language: language,
+                        page: '1'
+                    }
+                })
+                console.log(resslidemovie.data.results);
+                slidemovie.value = resslidemovie.data.results;
+
+                const postData = {
+                    data: slidemovie.id,
+                };
+
+                const response = await axios.post('')
+
+
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
-        })
-        return { slidemovie }
-    }
-}     
+        });
+
+        // 여기서 데이터를 반환합니다.
+        return { slidemovie, getPostPath };
+    },
+};
 </script>
 
 <style lang="scss">

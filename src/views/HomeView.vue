@@ -2,10 +2,10 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import HeaderSection from '@/components/section/HeaderSection.vue'
-import FooterSection from '@/components/section/FooterSection.vue'
-import MovieSearch from '@/components/contents/MovieSearch.vue'
-import MovieTag from '@/components/contents/MovieTag.vue'
-import MovieCont from '@/components/contents/MovieCont.vue'
+// import FooterSection from '@/components/section/FooterSection.vue'
+// import MovieSearch from '@/components/contents/MovieSearch.vue'
+// import MovieTag from '@/components/contents/MovieTag.vue'
+// import MovieCont from '@/components/contents/MovieCont.vue'
 
 const movies = ref([]) //useState
 
@@ -46,25 +46,6 @@ const fetchMovies = async (category) => {
 }
 // fetchMovies
 
-// const search = async () => {
-//   try {
-//     console.log(searchTerm.value)
-//     const response = await axios.get('https://api.themoviedb.org/3/search/movie', {
-//       params: {
-//         api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
-//         language: 'ko-KR',
-//         query: searchTerm.value
-//       }
-//     })
-//     console.log(response)
-//     movies.value = response.data.results
-//     // searchResults.value = response.data;
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-// search
-
 onMounted(async () => {
   // 초기 페이지 로딩 시 최신 영화를 가져옴
   await fetchMovies('latest')
@@ -73,38 +54,27 @@ onMounted(async () => {
 
 <template>
   <HeaderSection />
-  <main id="main" role="main">
+  <!-- <main id="main" role="main">
     <div class="container">
       <div class="movie__inner">
         <MovieSearch />
         <MovieTag />
-        <!-- <MovieCont /> -->
-        <section class="movie__cont">
-          <h2 class="blind">영화</h2>
-          <div class="movie play__icon" v-for="movie in movies" :key="movie.id">
-            <a :href="'/detail/' + movie.id">
-              <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" />
-            </a>
-          </div>
-        </section>
-        <!-- //movie__cont -->
+        <MovieCont />
       </div>
     </div>
   </main>
-  <FooterSection />
+  <FooterSection /> -->
 </template>
-
-
 
 <script>
 export default {
   name: 'MovieHomePage',
   components: {
     HeaderSection,
-    FooterSection,
-    MovieSearch,
-    MovieTag,
-    MovieCont
+    // FooterSection,
+    // MovieSearch,
+    // MovieTag,
+    // MovieCont
   },
   data() {
     return {
@@ -112,39 +82,8 @@ export default {
     }
   },
   methods: {
-    async search(query) {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`
-        )
-        const result = await response.json()
-        console.log(result)
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    async tags(query) {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`
-        )
-        const result = await response.json()
-        console.log(result)
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    async content(query) {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/search/movie?api_key=ade9889e6c6c54cbf65cc7f38a2bec71&language:ko-KR&query=${query}`
-        )
-        const result = await response.json()
-        console.log(result)
-      } catch (err) {
-        console.log(err)
-      }
-    }
+
+
   }
 }
 </script>
