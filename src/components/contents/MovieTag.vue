@@ -21,10 +21,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 
-const movies = ref([])
+import { ref, defineProps, defineEmits } from 'vue'
+
+const props = defineProps(['fetchMovies'])
+const { emit } = defineEmits(['fetchMovies'])
 
 const fetchMovies = async (category) => {
   let url = 'https://api.themoviedb.org/3/movie/popular'
@@ -46,11 +48,21 @@ const fetchMovies = async (category) => {
       url = 'https://api.themoviedb.org/3/movie/upcoming'
       break
   }
+
+  try {
+    const response = await axios.get(url, {
+      params: {
+        api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
+        language: 'ko-KR',
+        page: '1'
+      }
+    })
+    emit('fetchMovies', response.data.results)
+    console.log(response)
+    movies.value = response.data.results
+  } catch (err) {
+    console.log(err)
+  }
 }
-
-
-
-export default {
-
-}
+// fetchMovies
 </script>

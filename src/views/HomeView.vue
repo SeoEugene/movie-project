@@ -2,49 +2,16 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import HeaderSection from '@/components/section/HeaderSection.vue'
-// import FooterSection from '@/components/section/FooterSection.vue'
-// import MovieSearch from '@/components/contents/MovieSearch.vue'
-// import MovieTag from '@/components/contents/MovieTag.vue'
+import MovieSearch from '@/components/contents/MovieSearch.vue'
+import MovieTag from '@/components/contents/MovieTag.vue'
 // import MovieCont from '@/components/contents/MovieCont.vue'
+import FooterSection from '@/components/section/FooterSection.vue'
 
-const movies = ref([]) //useState
+const movies = ref([])
 
-const fetchMovies = async (category) => {
-  let url = 'https://api.themoviedb.org/3/movie/popular'
-
-  switch (category) {
-    case 'latest':
-      url = 'https://api.themoviedb.org/3/movie/now_playing'
-      break
-
-    case 'popular':
-      url = 'https://api.themoviedb.org/3/movie/popular'
-      break
-
-    case 'top_rated':
-      url = 'https://api.themoviedb.org/3/movie/top_rated'
-      break
-
-    case 'upcoming':
-      url = 'https://api.themoviedb.org/3/movie/upcoming'
-      break
-  }
-
-  try {
-    const response = await axios.get(url, {
-      params: {
-        api_key: 'ade9889e6c6c54cbf65cc7f38a2bec71',
-        language: 'ko-KR',
-        page: '1'
-      }
-    })
-    console.log(response)
-    movies.value = response.data.results
-  } catch (err) {
-    console.log(err)
-  }
+const fetchMovies = async (moviesData) => {
+  movies.value = moviesData
 }
-// fetchMovies
 
 onMounted(async () => {
   // 초기 페이지 로딩 시 최신 영화를 가져옴
@@ -54,16 +21,16 @@ onMounted(async () => {
 
 <template>
   <HeaderSection />
-  <!-- <main id="main" role="main">
+  <main id="main" role="main">
     <div class="container">
       <div class="movie__inner">
         <MovieSearch />
-        <MovieTag />
-        <MovieCont />
+        <MovieTag :fetchMovies="fetchMovies" />
+        <!-- <MovieCont /> -->
       </div>
     </div>
   </main>
-  <FooterSection /> -->
+  <FooterSection />
 </template>
 
 <script>
@@ -71,20 +38,17 @@ export default {
   name: 'MovieHomePage',
   components: {
     HeaderSection,
-    // FooterSection,
-    // MovieSearch,
-    // MovieTag,
-    // MovieCont
+    MovieSearch,
+    MovieTag,
+    // MovieCont,
+    FooterSection
   },
   data() {
     return {
       movies: []
     }
   },
-  methods: {
-
-
-  }
+  methods: {}
 }
 </script>
 
